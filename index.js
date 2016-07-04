@@ -260,16 +260,6 @@
   //  show :: a -> String
   var show = function(x) { return _show(x, []); };
 
-  //  TypeClass :: (String, (a -> Boolean)) -> TypeClass
-  $.TypeClass = function(name, test) {
-    return {
-      '@@type': 'sanctuary-def/TypeClass',
-      name: name,
-      _test: test,
-      toString: always(stripNamespace(name))
-    };
-  };
-
   //  testFrom :: (a -> Result) -> a -> Boolean
   var testFrom = function(validate) {
     return function(x) {
@@ -583,7 +573,7 @@
   );
 
   //  Pair :: (Type, Type) -> Type
-  $.Pair = $.BinaryType(
+  $.Pair = BinaryType(
     'sanctuary-def/Pair',
     function(x) { return $$typeEq('Array')(x) && x.length === 2; },
     function(pair) { return [pair[0]]; },
@@ -697,7 +687,7 @@
   var Type = type0('sanctuary-def/Type');
 
   //  TypeClass :: Type
-  var TypeClass = type0('sanctuary-def/TypeClass');
+  var TypeClass = type0('sanctuary-type-classes/TypeClass');
 
   //  arity :: (Number, Function) -> Function
   var arity = function(n, f) {
@@ -925,7 +915,7 @@
             var typeClasses = constraints[typeVarName];
             for (idx = 0; idx < values.length; idx += 1) {
               for (var idx2 = 0; idx2 < typeClasses.length; idx2 += 1) {
-                if (!typeClasses[idx2]._test(values[idx])) {
+                if (!typeClasses[idx2].test(values[idx])) {
                   return Left(typeClassConstraintViolation(
                     name,
                     constraints,

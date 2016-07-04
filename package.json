@@ -17,6 +17,7 @@
     "mocha": "2.x.x",
     "ramda": "0.21.x",
     "sanctuary-style": "0.1.x",
+    "sanctuary-type-classes": "sanctuary-js/sanctuary-type-classes#dc-everything",
     "xyz": "0.5.x"
   },
   "files": [

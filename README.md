@@ -921,9 +921,12 @@ The solution is to constrain `a` by first defining a `TypeClass` value, then
 specifying the constraint in the definition of the "concat" function:
 
 ```javascript
+const λ = require('sanctuary-type-classes');
+
 //    Semigroup :: TypeClass
-const Semigroup = $.TypeClass(
+const Semigroup = λ.TypeClass(
   'my-package/Semigroup',
+  [],
   x => x != null && typeof x.concat === 'function'
 );
 

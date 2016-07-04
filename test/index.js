@@ -4,6 +4,7 @@ var assert = require('assert');
 var vm = require('vm');
 
 var R = require('ramda');
+var λ = require('sanctuary-type-classes');
 
 var $ = require('..');
 
@@ -71,7 +72,7 @@ var Nothing = function() {
 };
 
 //  Just :: a -> Maybe a
-var Just = function(x) {
+var Just = function Just(x) {
   return {
     '@@type': 'my-package/Maybe',
     chain: function(f) { return f(x); },
@@ -1939,7 +1940,7 @@ describe('def', function() {
 
     //  Alternative :: TypeClass
     var Alternative =
-    $.TypeClass('my-package/Alternative', hasMethods(['empty', 'or']));
+    λ.TypeClass('my-package/Alternative', [], hasMethods(['empty', 'or']));
 
     //  or :: Alternative a => a -> a -> a
     var or = def('or', {a: [Alternative]}, [a, a, a], function(x, y) {
@@ -1977,7 +1978,7 @@ describe('def', function() {
 
     //  Semigroup :: TypeClass
     var Semigroup =
-    $.TypeClass('my-package/Semigroup', hasMethods(['concat']));
+    λ.TypeClass('my-package/Semigroup', [], hasMethods(['concat']));
 
     //  concat :: Semigroup a => a -> a -> a
     var concat = def('concat', {a: [Semigroup]}, [a, a, a], function(x, y) {
@@ -2041,11 +2042,11 @@ describe('def', function() {
 
     //  Monad :: TypeClass
     var Monad =
-    $.TypeClass('my-package/Monad', hasMethods(['chain', 'of']));
+    λ.TypeClass('my-package/Monad', [], hasMethods(['chain', 'of']));
 
     //  Monoid :: TypeClass
     var Monoid =
-    $.TypeClass('my-package/Monoid', hasMethods(['concat', 'empty']));
+    λ.TypeClass('my-package/Monoid', [], hasMethods(['concat', 'empty']));
 
     //  filter :: (Monad m, Monoid (m a)) => (a -> Boolean) -> m a -> m a
     var filter =
